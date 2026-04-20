@@ -124,8 +124,8 @@ jobs:
       - name: Build frontend
         run: pnpm --filter @tarbie/web build
         env:
-          VITE_API_URL: ${{ secrets.API_URL }}
-          VITE_TELEGRAM_BOT_USERNAME: ${{ secrets.TELEGRAM_BOT_USERNAME }}
+          VITE_API_URL: https://dprabota.bahtyarsanzhar.workers.dev
+          VITE_TELEGRAM_BOT_USERNAME: TarbieSagatyBot
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
