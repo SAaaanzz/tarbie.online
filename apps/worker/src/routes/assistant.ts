@@ -98,26 +98,34 @@ assistant.post('/generate', async (c) => {
   const systemPrompt = SYSTEM_PROMPTS[category]![lang === 'kz' ? 'kz' : 'ru']!;
 
   try {
-    const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-      {
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+    const geminiBody = JSON.stringify({
+      system_instruction: { parts: [{ text: systemPrompt }] },
+      contents: [{ parts: [{ text: prompt.trim() }] }],
+      generationConfig: {
+        temperature: 0.8,
+        maxOutputTokens: 2048,
+      },
+    });
+
+    let geminiRes: Response | null = null;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      geminiRes = await fetch(geminiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: systemPrompt }] },
-          contents: [{ parts: [{ text: prompt.trim() }] }],
-          generationConfig: {
-            temperature: 0.8,
-            maxOutputTokens: 2048,
-          },
-        }),
-      }
-    );
+        body: geminiBody,
+      });
+      if (geminiRes.status !== 429) break;
+      await new Promise(r => setTimeout(r, (attempt + 1) * 2000));
+    }
 
-    if (!geminiRes.ok) {
-      const errText = await geminiRes.text();
-      structuredLog('error', 'Gemini API error', { status: geminiRes.status, body: errText.slice(0, 500) });
-      return c.json({ success: false, message: 'AI service temporarily unavailable' }, 502);
+    if (!geminiRes || !geminiRes.ok) {
+      const errText = geminiRes ? await geminiRes.text() : 'no response';
+      structuredLog('error', 'Gemini API error', { status: geminiRes?.status, body: errText.slice(0, 500) });
+      const msg = geminiRes?.status === 429
+        ? (lang === 'kz' ? 'AI қызметі қазір бос емес. Бірнеше секунд күтіп қайта көріңіз.' : 'AI сервис перегружен. Подождите несколько секунд и попробуйте снова.')
+        : (lang === 'kz' ? 'AI қызметі уақытша қол жетімсіз' : 'AI сервис временно недоступен');
+      return c.json({ success: false, message: msg }, 502);
     }
 
     const geminiData = await geminiRes.json() as {
