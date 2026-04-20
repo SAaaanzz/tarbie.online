@@ -98,7 +98,7 @@ assistant.post('/generate', async (c) => {
   const systemPrompt = SYSTEM_PROMPTS[category]![lang === 'kz' ? 'kz' : 'ru']!;
 
   try {
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+    const models = ['gemini-2.5-flash', 'gemini-2.0-flash-lite'];
     const geminiBody = JSON.stringify({
       system_instruction: { parts: [{ text: systemPrompt }] },
       contents: [{ parts: [{ text: prompt.trim() }] }],
@@ -109,14 +109,22 @@ assistant.post('/generate', async (c) => {
     });
 
     let geminiRes: Response | null = null;
-    for (let attempt = 0; attempt < 3; attempt++) {
-      geminiRes = await fetch(geminiUrl, {
+    for (const model of models) {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+      geminiRes = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: geminiBody,
       });
-      if (geminiRes.status !== 429) break;
-      await new Promise(r => setTimeout(r, (attempt + 1) * 2000));
+      if (geminiRes.ok) {
+        structuredLog('info', 'Gemini model used', { model });
+        break;
+      }
+      if (geminiRes.status === 429) {
+        structuredLog('warn', `Model ${model} rate limited, trying next`);
+        continue;
+      }
+      break;
     }
 
     if (!geminiRes || !geminiRes.ok) {
