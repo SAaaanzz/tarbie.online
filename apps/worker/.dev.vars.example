@@ -1,0 +1,2 @@
+JWT_SECRET=your-jwt-secret-min-32-chars-here
+OTP_SECRET=your-otp-secret-min-32-chars-here

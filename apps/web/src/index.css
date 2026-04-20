@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: 249 250 251;
+    --color-surface: 255 255 255;
+  }
+  .dark {
+    --color-bg: 17 24 39;
+    --color-surface: 31 41 55;
+    color-scheme: dark;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 shadow-sm transition-colors hover:bg-gray-50 dark:hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center rounded-lg bg-red-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .input-field {
+    @apply block w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2.5 text-sm text-gray-900 dark:text-gray-100 shadow-sm placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 disabled:bg-gray-50 dark:disabled:bg-gray-800 disabled:text-gray-500;
+  }
+
+  .card {
+    @apply rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+
+  .badge-planned {
+    @apply badge bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 ring-1 ring-inset ring-blue-600/20;
+  }
+
+  .badge-completed {
+    @apply badge bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 ring-1 ring-inset ring-green-600/20;
+  }
+
+  .badge-cancelled {
+    @apply badge bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 ring-1 ring-inset ring-red-600/20;
+  }
+
+  .badge-rescheduled {
+    @apply badge bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 ring-1 ring-inset ring-amber-600/20;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ── Dark mode global overrides ── */
+.dark body {
+  background-color: rgb(17 24 39);
+  color: rgb(229 231 235);
+}
+
+/* White panels → dark gray */
+.dark .bg-white { background-color: rgb(31 41 55) !important; }
+.dark .bg-gray-50 { background-color: rgb(17 24 39) !important; }
+.dark .bg-gray-100 { background-color: rgb(31 41 55) !important; }
+
+/* Text colors */
+.dark .text-gray-900 { color: rgb(243 244 246) !important; }
+.dark .text-gray-800 { color: rgb(229 231 235) !important; }
+.dark .text-gray-700 { color: rgb(209 213 219) !important; }
+.dark .text-gray-600 { color: rgb(156 163 175) !important; }
+
+/* Border colors */
+.dark .border-gray-200 { border-color: rgb(55 65 81) !important; }
+.dark .border-gray-300 { border-color: rgb(75 85 99) !important; }
+.dark .border-gray-100 { border-color: rgb(55 65 81) !important; }
+
+/* Soft background tints */
+.dark .bg-blue-50 { background-color: rgba(59 130 246 / 0.15) !important; }
+.dark .bg-green-50 { background-color: rgba(34 197 94 / 0.15) !important; }
+.dark .bg-red-50 { background-color: rgba(239 68 68 / 0.15) !important; }
+.dark .bg-amber-50 { background-color: rgba(245 158 11 / 0.15) !important; }
+.dark .bg-yellow-50 { background-color: rgba(234 179 8 / 0.15) !important; }
+.dark .bg-orange-50 { background-color: rgba(249 115 22 / 0.15) !important; }
+.dark .bg-purple-50 { background-color: rgba(168 85 247 / 0.15) !important; }
+.dark .bg-indigo-50 { background-color: rgba(99 102 241 / 0.15) !important; }
+
+/* Inputs & selects */
+.dark select,
+.dark input[type="text"],
+.dark input[type="tel"],
+.dark input[type="email"],
+.dark input[type="number"],
+.dark input[type="search"],
+.dark input[type="date"],
+.dark input[type="time"],
+.dark textarea {
+  background-color: rgb(55 65 81) !important;
+  border-color: rgb(75 85 99) !important;
+  color: rgb(229 231 235) !important;
+}
+.dark select option {
+  background-color: rgb(55 65 81);
+  color: rgb(229 231 235);
+}
+
+/* Tables */
+.dark table th { background-color: rgb(31 41 55) !important; color: rgb(209 213 219) !important; }
+.dark table td { border-color: rgb(55 65 81) !important; }
+.dark table tr:hover td { background-color: rgb(55 65 81) !important; }
+.dark thead { border-color: rgb(55 65 81) !important; }
+.dark tbody tr { border-color: rgb(55 65 81) !important; }
+
+/* Hover states */
+.dark .hover\:bg-gray-50:hover { background-color: rgb(55 65 81) !important; }
+.dark .hover\:bg-gray-100:hover { background-color: rgb(55 65 81) !important; }
+
+/* Ring / shadow adjustments */
+.dark .shadow-sm { box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.3) !important; }
+
+/* Premium gradient card in dark */
+.dark .bg-gradient-to-br.from-amber-50 { background: linear-gradient(to bottom right, rgba(245 158 11 / 0.15), rgba(234 179 8 / 0.1), rgba(249 115 22 / 0.1)) !important; }
+
+/* Modals & overlays */
+.dark .bg-black\/50 { background-color: rgba(0 0 0 / 0.7) !important; }

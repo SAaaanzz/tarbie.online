@@ -1,0 +1,22 @@
+{
+  "name": "tarbie-sagaty-manager",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Тәрбие Сағаты Manager — electronic system for scheduling and managing homeroom sessions in Kazakhstani schools",
+  "scripts": {
+    "dev:web": "pnpm --filter @tarbie/web dev",
+    "dev:worker": "pnpm --filter @tarbie/worker dev",
+    "dev:bot": "pnpm --filter @tarbie/bot-worker dev",
+    "build:web": "pnpm --filter @tarbie/web build",
+    "build:shared": "pnpm --filter @tarbie/shared build",
+    "deploy:worker": "pnpm --filter @tarbie/worker deploy",
+    "deploy:bot": "pnpm --filter @tarbie/bot-worker deploy",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "db:migrate": "pnpm --filter @tarbie/worker db:migrate"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}

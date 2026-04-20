@@ -1,0 +1,28 @@
+name = "tarbie-bot"
+main = "src/worker.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "tarbie-db"
+database_id = "87e867fe-6797-431f-adc3-59593cee80af"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "4302997f858144d481fade050ff55e8b"
+
+[[queues.consumers]]
+queue = "tarbie-notifications"
+max_batch_size = 10
+max_batch_timeout = 5
+
+[vars]
+ENVIRONMENT = "production"
+APP_URL = "https://tarbie.online"
+
+# Secrets (set via `wrangler secret put`):
+# TELEGRAM_BOT_TOKEN
+# TELEGRAM_WEBHOOK_SECRET
+# WHATSAPP_TOKEN
+# WHATSAPP_PHONE_NUMBER_ID
