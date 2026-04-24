@@ -19,6 +19,7 @@ import { CourseDetailPage } from './pages/CourseDetailPage';
 import { LessonPage } from './pages/LessonPage';
 import { MyCoursesPage } from './pages/MyCoursesPage';
 import { CourseBuilderPage } from './pages/CourseBuilderPage';
+import { TestRunnerPage } from './pages/TestRunnerPage';
 import { api } from './lib/api';
 import { subscribe, getPath, getSearchParam } from './lib/router';
 import { GraduationCap, Plus, Loader2, Users, UserPlus, BookOpen, Trash2, X, Eye, Upload, FileSpreadsheet, AlertTriangle, CheckCircle2, Search, Download, Edit3 } from 'lucide-react';
@@ -87,6 +88,8 @@ function Router({ path }: { path: string }) {
       return hasRole('admin', 'teacher') ? <CourseBuilderPage courseId={getSearchParam('id')} /> : <AccessDenied />;
     case '/my-courses':
       return <MyCoursesPage />;
+    case '/test-runner':
+      return hasRole('admin') ? <TestRunnerPage /> : <AccessDenied />;
     default:
       return <DashboardPage />;
   }
