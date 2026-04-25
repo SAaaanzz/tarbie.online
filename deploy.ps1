@@ -20,7 +20,7 @@ if ($LASTEXITCODE -ne 0) { Write-Host "FAILED" -ForegroundColor Red; exit 1 }
 # 4. Deploy frontend
 Write-Host "`n[4/4] Deploying frontend..." -ForegroundColor Yellow
 Push-Location apps/web
-npx wrangler pages deploy dist --project-name=tarbie-sagaty --commit-dirty=true
+npx wrangler pages deploy dist --project-name=tarbie-sagaty --commit-dirty=true --branch=main
 Pop-Location
 
 Write-Host "`n=== Done! ===" -ForegroundColor Green
